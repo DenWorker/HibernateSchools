@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 public class School {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -16,7 +17,7 @@ public class School {
 
     @OneToOne
     @JoinColumn(name = "principal_id", referencedColumnName = "id")
-    private  Principal principal;
+    private Principal principal;
 
     public School() {
     }

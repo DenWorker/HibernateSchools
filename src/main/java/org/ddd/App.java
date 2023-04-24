@@ -19,7 +19,6 @@ public class App {
         try {
             session.beginTransaction();
 
-            getPrincipalAndHisSchool(6);
 
             session.getTransaction().commit();
         } finally {
@@ -34,6 +33,32 @@ public class App {
         System.out.println("Информация о его школе директоре:");
         System.out.println(principal.getSchool().toString());
         System.out.println("-------------------------------------");
+    }
+
+    public static void getSchoolAndPrincipal(int idOfSchool) {
+        School school = session.get(School.class, idOfSchool);
+        System.out.println("Информация о школе:");
+        System.out.println(school.toString());
+        System.out.println("Информация о директоре этой школы:");
+        System.out.println(school.getPrincipal().toString());
+        System.out.println("-------------------------------------");
+    }
+
+    public static Principal newPrincipal(String name, int age) {
+        Principal principal = new Principal(name, age);
+        session.save(principal);
+        return principal;
+    }
+
+    public static School newSchool(int schoolNumber, Principal principal) {
+        School school = new School(schoolNumber, principal);
+        session.save(school);
+        return school;
+    }
+
+    public static void editPrincipalOfSchool(int idOfSchool, int idOfNewPrincipal) {
+        School school = session.get(School.class, idOfSchool);
+        school.setPrincipal(session.get(Principal.class, idOfNewPrincipal));
     }
 }
 
